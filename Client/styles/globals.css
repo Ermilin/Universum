@@ -1,0 +1,14 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Arial', Times, Arial, Helvetica, sans-serif !important;
+  background: rgb(36, 36, 36)!important;
+}
+a {
+  color: white!important;
+}
+
+* {
+  box-sizing: border-box;
+}
