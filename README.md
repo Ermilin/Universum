@@ -5,6 +5,7 @@ Universum visualizes real time data collected from various sources through its G
 * [Next.js](https://nextjs.org/)
 * [SWR real time polling](https://swr.vercel.app/)
 * [GraphQL Client](https://graphql.org/)
+* [Vis.js](https://visjs.org/)
 
 #### Back End
 * [Node.js](https://nodejs.org/en/)
