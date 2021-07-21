@@ -1,4 +1,4 @@
-const sql = require('mssql');
+const sql = require("mssql");
 
 const config = {
   server: process.env.DB_HOST,
@@ -7,13 +7,13 @@ const config = {
   password: process.env.DB_PASS,
 };
 
-const query = 'select * from [universe].[dbo].[hosts]';
+const query = "select * from [universe].[dbo].[hosts]";
 
 export default async function handler(req, res) {
   return new Promise((resolve, reject) => {
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "no-cache");
 
     sql.connect(config, function (err) {
       if (err) {

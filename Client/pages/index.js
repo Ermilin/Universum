@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import useSWR from 'swr';
+import { useState } from "react";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import useSWR from "swr";
 
-const NetworkGraph = dynamic(() => import('components/NetworkGraph'), {
+const NetworkGraph = dynamic(() => import("components/NetworkGraph"), {
   ssr: false,
 });
 
@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Universum</title> <link rel='icon' href='/favicon.ico' />
+        <title>Universum</title> <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {data ? (
@@ -47,9 +47,7 @@ export default function Home() {
           filter={filter}
           handleSelectedNode={setSelectedNode}
         />
-      ) : (
-        ''
-      )}
+      ) : null}
     </>
   );
 }

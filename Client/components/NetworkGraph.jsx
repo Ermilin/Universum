@@ -1,35 +1,39 @@
-import useSWR from 'swr';
-import { request } from 'graphql-request';
+import useSWR from "swr";
+import { request } from "graphql-request";
 import React, {
   useState,
   useEffect,
   useContext,
   useRef,
   useLayoutEffect,
-} from 'react';
-import { DataSet, Network } from 'vis-network/standalone/esm/vis-network';
-import options from 'utils/options';
+} from "react";
+import { DataSet, Network } from "vis-network/standalone/esm/vis-network";
+import options from "utils/options";
 import {
   setStatusColor,
   setNodeShape,
   setNodeValue,
   animationOptions,
-} from 'utils/graphHelpers';
-const { findNestedObj } = require('../utils/findNestedObj');
+} from "utils/graphHelpers";
+const { findNestedObj } = require("../utils/findNestedObj");
 
-import { NodesContext } from 'components/context/NodesContext';
-import { NodeContext } from 'components/context/NodeContext';
+import { NodesContext } from "components/context/NodesContext";
+import { NodeContext } from "components/context/NodeContext";
 
 //fetch edges
+
 const NetworkGraph = (props) => {
   const [nodesContext, setNodesContext] = useContext(NodesContext);
   const [nodeContext, setNodeContext] = useContext(NodeContext);
+  // const { data, error } = useSWR(API);
 
-  //container of the graph
+  //element where to place the graph
   const domNode = useRef(null);
-  //the actual graph
+  //element of the graph
   const network = useRef(null);
 
+  // Dataset of the graph which the network consumes
+  // Allows for dynamic updates
   const nodes = new DataSet();
   const edges = new DataSet();
 
@@ -110,7 +114,7 @@ const NetworkGraph = (props) => {
     if (domNode.current) {
       (function setGroupNodes() {
         data.map((x, i) => {
-          //Group
+          //Grupp
           x.groups.map((group) => {
             //Set group nodes (Layer 1)
             nodes.add({
@@ -147,8 +151,8 @@ const NetworkGraph = (props) => {
       })();
 
       //Log all event updates such as node creations, updates or deletions
-      nodes.on('update', function (event, properties, senderId) {
-        console.log('event', event, properties);
+      nodes.on("update", function (event, properties, senderId) {
+        console.log("event", event, properties);
         console.log(nodes.get());
         console.log(edges.get());
       });
@@ -159,13 +163,13 @@ const NetworkGraph = (props) => {
       { nodes: nodes, edges: edges },
       options
     );
-    network.current.on('stabilizationIterationsDone', function () {
+    network.current.on("stabilizationIterationsDone", function () {
       // network.current.setOptions({ physics: false });
       // console.log("Network stabilized, physics disabled.");
     });
 
     //node onClick, set the current node in a context so other components can use it
-    network.current.on('click', (properties) => {
+    network.current.on("click", (properties) => {
       if (properties.nodes.length) {
         setNodeContext(nodes.get(properties.nodes[0]).id);
       } else {
@@ -174,7 +178,7 @@ const NetworkGraph = (props) => {
     });
   }, [domNode, network]);
 
-  return <div style={{ height: '100%' }} id='network' ref={domNode} />;
+  return <div style={{ height: "100%" }} id="network" ref={domNode} />;
 };
 
 export default NetworkGraph;

@@ -1,17 +1,17 @@
-require('dotenv').config();
-const express = require('express');
-const http = require('http');
-const next = require('next');
-const uid = require('uid-safe');
-const expressSession = require('express-session');
-const authRoutes = require('./auth-routes');
+require("dotenv").config();
+const express = require("express");
+const http = require("http");
+const next = require("next");
+const uid = require("uid-safe");
+const expressSession = require("express-session");
+const authRoutes = require("./auth-routes");
 
-const dev = process.env.NODE_ENV !== 'production';
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+const dev = process.env.NODE_ENV !== "production";
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 const app = next({
   dev,
-  dir: '.',
+  dir: ".",
 });
 const handle = app.getRequestHandler();
 
@@ -28,7 +28,7 @@ app.prepare().then(() => {
   };
   server.use(expressSession(session));
 
-  const { getConfiguredPassport } = require('./passport');
+  const { getConfiguredPassport } = require("./passport");
 
   (async () => {
     const passport = await getConfiguredPassport();
@@ -37,14 +37,14 @@ app.prepare().then(() => {
     server.use(authRoutes);
 
     const restrictAccess = (req, res, next) => {
-      if (!req.isAuthenticated()) return res.redirect('/login');
+      if (!req.isAuthenticated()) return res.redirect("/login");
       next();
     };
 
-    server.use('/', restrictAccess);
+    server.use("/", restrictAccess);
 
     // hantera allt annat med Next.js
-    server.get('*', handle);
+    server.get("*", handle);
 
     http.createServer(server).listen(process.env.PORT, () => {
       console.log(`listening on port ${process.env.PORT}`);

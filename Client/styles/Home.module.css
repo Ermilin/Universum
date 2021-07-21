@@ -31,8 +31,10 @@
 
 .nav {
   height: fit-content;
-  z-index: 5000;
+  z-Index: 5000;
   grid-row: 2;
   grid-column: 1;
   /* background-color: rgba(36, 36, 36, 0.75); */
 }
+
+

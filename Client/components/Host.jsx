@@ -1,73 +1,72 @@
-import { useState, useEffect, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import Collapse from '@material-ui/core/Collapse';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
+import { useState, useEffect, useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import Collapse from "@material-ui/core/Collapse";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableRow from "@material-ui/core/TableRow";
+import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
 
-import Typography from '@material-ui/core/Typography';
-import { NodeContext } from 'components/context/NodeContext';
-import { NodesContext } from 'components/context/NodesContext';
-import Chip from 'components/Chip';
+import Typography from "@material-ui/core/Typography";
+import { NodeContext } from "components/context/NodeContext";
+import { NodesContext } from "components/context/NodesContext";
+import Chip from "components/Chip";
 
-import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 const useStyles = makeStyles((theme) => ({
   list: {
     gridColumn: 3,
     gridRow: 2,
-    position: 'fixed',
+    position: "fixed",
     padding: theme.spacing(1),
     bottom: 0,
     right: 0,
   },
   root: {
     minWidth: 0,
-    position: 'relative',
+    position: "relative",
   },
   objectKey: {
-    color: 'rgba(217,106,225)',
+    color: "rgba(217,106,225)",
   },
   objectValue: {
-    color: 'rgba(220,61,57)',
+    color: "rgba(220,61,57)",
   },
   table: {
     right: 0,
-    width: '400px',
+    width: "400px",
   },
   close: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
   },
 }));
 
 function setStyle(key, value) {
-  if (key == 'code') {
-    if (value == 'Warning') {
-      return { backgroundColor: 'yellow', color: 'black' };
+  if (key == "code") {
+    if (value == "Warning") {
+      return { backgroundColor: "yellow", color: "black" };
     }
-    if (value == 'Critical') {
-      return { backgroundColor: 'red', color: 'black' };
+    if (value == "Critical") {
+      return { backgroundColor: "red", color: "black" };
     }
-    if (value == 'OK') {
-      return { backgroundColor: 'green' };
+    if (value == "OK") {
+      return { backgroundColor: "green" };
     }
   }
 }
 function chipColor(value) {
-  if (value == 'Warning') {
-    return 'primary';
+  if (value == "Warning") {
+    return "primary";
   }
-  if (value == 'Critical') {
-    return 'secondary';
+  if (value == "Critical") {
+    return "secondary";
   }
 }
 
@@ -91,7 +90,7 @@ const Host = () => {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -100,11 +99,11 @@ const Host = () => {
   function clipBoard(text) {
     navigator.clipboard.writeText(text).then(
       function () {
-        console.log('Copied text: ' + text);
+        console.log("Copied text: " + text);
         handleClick(text);
       },
       function (err) {
-        console.error('Async: Could not copy text: ', err);
+        console.error("Async: Could not copy text: ", err);
       }
     );
   }
@@ -113,55 +112,55 @@ const Host = () => {
     <>
       <List
         className={classes.root}
-        component='nav'
-        aria-labelledby='nested-list-subheader'
+        component="nav"
+        aria-labelledby="nested-list-subheader"
       ></List>
 
       <Collapse
-        in={typeof selectedNode == 'object'}
-        timeout='auto'
+        in={typeof selectedNode == "object"}
+        timeout="auto"
         unmountOnExit
         className={classes.list}
       >
         {selectedNode ? (
           <Card className={classes.root}>
             <IconButton
-              aria-label='delete'
+              aria-label="delete"
               className={classes.close}
               onClick={() => setSelectedNode(false)}
             >
-              <CloseOutlinedIcon fontSize='normal' />
+              <CloseOutlinedIcon fontSize="normal" />
             </IconButton>
             <CardContent>
               <TableContainer className={classes.paper}>
                 <Table
                   className={classes.table}
-                  size='small'
-                  aria-label='node info'
+                  size="small"
+                  aria-label="node info"
                 >
                   <TableBody>
                     {Object.keys(selectedNode).map((key) => {
-                      if (key == 'id') return;
+                      if (key == "id") return;
 
-                      if (key == 'name')
+                      if (key == "name")
                         return (
-                          <Typography variant='h5' component='h2'>
+                          <Typography variant="h5" component="h2">
                             {selectedNode[key]}
                           </Typography>
                         );
 
-                      if (key == 'label')
+                      if (key == "label")
                         return (
                           <Typography
                             className={classes.pos}
-                            color='textSecondary'
+                            color="textSecondary"
                           >
                             {selectedNode[key]}
                           </Typography>
                         );
 
-                      if (typeof selectedNode[key] == 'object') {
-                        if (key == 'status') {
+                      if (typeof selectedNode[key] == "object") {
+                        if (key == "status") {
                           if (!selectedNode[key].comment)
                             return (
                               <Chip
@@ -178,15 +177,15 @@ const Host = () => {
                           );
                         } else {
                           return selectedNode[key] ? (
-                            <Table size='small' aria-label='node info'>
+                            <Table size="small" aria-label="node info">
                               <TableRow
                                 key={key}
                                 onClick={() => clipBoard(selectedNode[key])}
                               >
                                 <TableCell
-                                  component='th'
-                                  scope='row'
-                                  align='right'
+                                  component="th"
+                                  scope="row"
+                                  align="right"
                                 >
                                   {key}
                                 </TableCell>
@@ -197,8 +196,8 @@ const Host = () => {
                                     key={nestedKey}
                                     onClick={() => clipBoard(selectedNode[key])}
                                   >
-                                    <Box component='span' pl={2}>
-                                      <TableCell component='th' scope='row'>
+                                    <Box component="span" pl={2}>
+                                      <TableCell component="th" scope="row">
                                         {nestedKey}
                                       </TableCell>
                                       <TableCell
@@ -206,23 +205,23 @@ const Host = () => {
                                           nestedKey,
                                           selectedNode[key][nestedKey]
                                         )}
-                                        align='right'
+                                        align="right"
                                       >
                                         {selectedNode[key][nestedKey]}
                                         <Chip
                                           label={selectedNode[key][nestedKey]}
-                                          color='error.main'
+                                          color="error.main"
                                         />
                                       </TableCell>
                                     </Box>
                                   </TableRow>
                                 ) : (
-                                  ''
+                                  ""
                                 )
                               )}
                             </Table>
                           ) : (
-                            ''
+                            ""
                           );
                         }
                       } else {
@@ -231,13 +230,13 @@ const Host = () => {
                             key={key}
                             onClick={() => clipBoard(selectedNode[key])}
                           >
-                            <TableCell component='th' scope='row'>
+                            <TableCell component="th" scope="row">
                               {key}
                             </TableCell>
                             <TableCell>{selectedNode[key]}</TableCell>
                           </TableRow>
                         ) : (
-                          ''
+                          ""
                         );
                       }
                     })}
@@ -247,7 +246,7 @@ const Host = () => {
             </CardContent>
           </Card>
         ) : (
-          ''
+          ""
         )}
       </Collapse>
     </>

@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const { Strategy, discoverAndCreateClient } = require('passport-curity');
+const passport = require("passport");
+const { Strategy, discoverAndCreateClient } = require("passport-curity");
 
 const getConfiguredPassport = async () => {
   const { ISSUER_URL, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } = process.env;
@@ -10,14 +10,14 @@ const getConfiguredPassport = async () => {
     issuerUrl: ISSUER_URL,
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    redirectUris: [`${REDIRECT_URI}`],
+    redirectUris: [REDIRECT_URI],
   });
 
   const strategy = new Strategy(
     {
       client,
       params: {
-        scope: 'openid profile',
+        scope: "openid profile",
       },
     },
     function (accessToken, refreshToken, profile, cb) {

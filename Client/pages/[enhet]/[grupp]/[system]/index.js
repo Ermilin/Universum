@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import useSWR from 'swr';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import useSWR from "swr";
 
-const NetworkGraph = dynamic(() => import('components/NetworkGraph'), {
+const NetworkGraph = dynamic(() => import("components/NetworkGraph"), {
   ssr: false,
 });
 
@@ -44,7 +44,7 @@ const Index = () => {
     <>
       <Head>
         <title>Universum | {router.query.system}</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       {data ? (
         <NetworkGraph
@@ -52,9 +52,7 @@ const Index = () => {
           filter={filter}
           handleSelectedNode={setSelectedNode}
         />
-      ) : (
-        ''
-      )}
+      ) : null}
     </>
   );
 };
